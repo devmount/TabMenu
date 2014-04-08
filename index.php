@@ -196,24 +196,30 @@ class TabMenu extends Plugin
 
         // build tab content for each subcategory
         foreach ($currentcatarray as $key => $cat) {
+            $catname = substr($cat, strripos($cat, '%2F')+3);
             $content .= '<div id="tabs-' . $key . '">';
             $currentpagearray = $CatPage->get_PageArray(
                 $cat,
                 array(".hid.php", ".txt.php")
             );
-            // build link to each page of current subcategory
-            foreach ($currentpagearray as $currentpage) {
-                // $content .= '<li>' . urldecode($currentpage) . '</li>';
-                $content .= $CatPage->create_AutoLinkTag(
-                    $cat,
-                    $currentpage,
-                    'tabmenu-pagelink'
-                );
+            $currentpagearray = array_diff($currentpagearray, array($catname));
+
+            if (count($currentpagearray) == 0) {
+                $content .= 'Es sind für ' . $catname . ' momentant noch keine Einträge verfügbar.';
+            } else {
+                // build link to each page of current subcategory
+                foreach ($currentpagearray as $currentpage) {
+                    $content .= $CatPage->create_AutoLinkTag(
+                        $cat,
+                        $currentpage,
+                        'tabmenu-pagelink'
+                    );
+                }
             }
             $content .= '</div>';
         }
         $content .= '</div>';
-        $content .= '</div>';
+        $content .= '</div><br style="clear:both;" />';
 
         // end plugin content
         $content .= '<!-- END ' . self::PLUGIN_TITLE . ' plugin content --> ';
@@ -231,83 +237,83 @@ class TabMenu extends Plugin
         $config = array();
 
         // read configuration values
-        foreach ($this->_confdefault as $key => $value) {
-            // handle each form type
-            switch ($value[1]) {
-            case 'text':
-                $config[$key] = $this->confText(
-                    $this->_admin_lang->getLanguageValue('config_' . $key),
-                    $value[2],
-                    $value[3],
-                    $value[4],
-                    $this->_admin_lang->getLanguageValue(
-                        'config_' . $key . '_error'
-                    )
-                );
-                break;
+        // foreach ($this->_confdefault as $key => $value) {
+        //     // handle each form type
+        //     switch ($value[1]) {
+        //     case 'text':
+        //         $config[$key] = $this->confText(
+        //             $this->_admin_lang->getLanguageValue('config_' . $key),
+        //             $value[2],
+        //             $value[3],
+        //             $value[4],
+        //             $this->_admin_lang->getLanguageValue(
+        //                 'config_' . $key . '_error'
+        //             )
+        //         );
+        //         break;
 
-            case 'textarea':
-                $config[$key] = $this->confTextarea(
-                    $this->_admin_lang->getLanguageValue('config_' . $key),
-                    $value[2],
-                    $value[3],
-                    $value[4],
-                    $this->_admin_lang->getLanguageValue(
-                        'config_' . $key . '_error'
-                    )
-                );
-                break;
+        //     case 'textarea':
+        //         $config[$key] = $this->confTextarea(
+        //             $this->_admin_lang->getLanguageValue('config_' . $key),
+        //             $value[2],
+        //             $value[3],
+        //             $value[4],
+        //             $this->_admin_lang->getLanguageValue(
+        //                 'config_' . $key . '_error'
+        //             )
+        //         );
+        //         break;
 
-            case 'password':
-                $config[$key] = $this->confPassword(
-                    $this->_admin_lang->getLanguageValue('config_' . $key),
-                    $value[2],
-                    $value[3],
-                    $value[4],
-                    $this->_admin_lang->getLanguageValue(
-                        'config_' . $key . '_error'
-                    ),
-                    $value[5]
-                );
-                break;
+        //     case 'password':
+        //         $config[$key] = $this->confPassword(
+        //             $this->_admin_lang->getLanguageValue('config_' . $key),
+        //             $value[2],
+        //             $value[3],
+        //             $value[4],
+        //             $this->_admin_lang->getLanguageValue(
+        //                 'config_' . $key . '_error'
+        //             ),
+        //             $value[5]
+        //         );
+        //         break;
 
-            case 'check':
-                $config[$key] = $this->confCheck(
-                    $this->_admin_lang->getLanguageValue('config_' . $key)
-                );
-                break;
+        //     case 'check':
+        //         $config[$key] = $this->confCheck(
+        //             $this->_admin_lang->getLanguageValue('config_' . $key)
+        //         );
+        //         break;
 
-            case 'radio':
-                $descriptions = array();
-                foreach ($value[2] as $label) {
-                    $descriptions[$label] = $this->_admin_lang->getLanguageValue(
-                        'config_' . $key . '_' . $label
-                    );
-                }
-                $config[$key] = $this->confRadio(
-                    $this->_admin_lang->getLanguageValue('config_' . $key),
-                    $descriptions
-                );
-                break;
+        //     case 'radio':
+        //         $descriptions = array();
+        //         foreach ($value[2] as $label) {
+        //             $descriptions[$label] = $this->_admin_lang->getLanguageValue(
+        //                 'config_' . $key . '_' . $label
+        //             );
+        //         }
+        //         $config[$key] = $this->confRadio(
+        //             $this->_admin_lang->getLanguageValue('config_' . $key),
+        //             $descriptions
+        //         );
+        //         break;
 
-            case 'select':
-                $descriptions = array();
-                foreach ($value[2] as $label) {
-                    $descriptions[$label] = $this->_admin_lang->getLanguageValue(
-                        'config_' . $key . '_' . $label
-                    );
-                }
-                $config[$key] = $this->confSelect(
-                    $this->_admin_lang->getLanguageValue('config_' . $key),
-                    $descriptions,
-                    $value[3]
-                );
-                break;
+        //     case 'select':
+        //         $descriptions = array();
+        //         foreach ($value[2] as $label) {
+        //             $descriptions[$label] = $this->_admin_lang->getLanguageValue(
+        //                 'config_' . $key . '_' . $label
+        //             );
+        //         }
+        //         $config[$key] = $this->confSelect(
+        //             $this->_admin_lang->getLanguageValue('config_' . $key),
+        //             $descriptions,
+        //             $value[3]
+        //         );
+        //         break;
 
-            default:
-                break;
-            }
-        }
+        //     default:
+        //         break;
+        //     }
+        // }
 
         // read admin.css
         $admin_css = '';
