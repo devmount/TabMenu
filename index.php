@@ -11,7 +11,7 @@
  * @package  PHP_MoziloPlugins
  * @author   HPdesigner <mail@devmount.de>
  * @license  GPL v3
- * @version  GIT: v0.x.jjjj-mm-dd
+ * @version  GIT: v0.1.jjjj-mm-dd
  * @link     https://github.com/devmount/TabMenu
  * @link     http://devmount.de/Develop/Mozilo%20Plugins/TabMenu.html
  * @see      Verse
@@ -47,10 +47,10 @@ class TabMenu extends Plugin
     const PLUGIN_DOCU
         = 'http://devmount.de/Develop/Mozilo%20Plugins/TabMenu.html';
     const PLUGIN_TITLE   = 'TabMenu';
-    const PLUGIN_VERSION = 'v0.x.jjjj-mm-dd';
+    const PLUGIN_VERSION = 'v0.1.jjjj-mm-dd';
     const MOZILO_VERSION = '2.0';
     private $_plugin_tags = array(
-        'tag1' => '{TabMenu|type|<param1>|<param2>}',
+        'tag1' => '{TabMenu}',
     );
 
     const LOGO_URL = 'http://media.devmount.de/logo_pluginconf.png';
@@ -67,45 +67,45 @@ class TabMenu extends Plugin
      *      radio    => default, type, descriptions
      *      select   => default, type, descriptions, multiselect
      */
-    private $_confdefault = array(
-        'text' => array(
-            'string',
-            'text',
-            '100',
-            '5',
-            "/^[0-9]{1,3}$/",
-        ),
-        'textarea' => array(
-            'string',
-            'textarea',
-            '10',
-            '10',
-            "/^[a-zA-Z0-9]{1,10}$/",
-        ),
-        'password' => array(
-            'string',
-            'password',
-            '100',
-            '5',
-            "/^[a-zA-Z0-9]{8,20}$/",
-            true,
-        ),
-        'check' => array(
-            true,
-            'check',
-        ),
-        'radio' => array(
-            'red',
-            'radio',
-            array('red', 'green', 'blue'),
-        ),
-        'select' => array(
-            'bike',
-            'select',
-            array('car','bike','plane'),
-            false,
-        ),
-    );
+    // private $_confdefault = array(
+    //     'text' => array(
+    //         'string',
+    //         'text',
+    //         '100',
+    //         '5',
+    //         "/^[0-9]{1,3}$/",
+    //     ),
+    //     'textarea' => array(
+    //         'string',
+    //         'textarea',
+    //         '10',
+    //         '10',
+    //         "/^[a-zA-Z0-9]{1,10}$/",
+    //     ),
+    //     'password' => array(
+    //         'string',
+    //         'password',
+    //         '100',
+    //         '5',
+    //         "/^[a-zA-Z0-9]{8,20}$/",
+    //         true,
+    //     ),
+    //     'check' => array(
+    //         true,
+    //         'check',
+    //     ),
+    //     'radio' => array(
+    //         'red',
+    //         'radio',
+    //         array('red', 'green', 'blue'),
+    //     ),
+    //     'select' => array(
+    //         'bike',
+    //         'select',
+    //         array('car','bike','plane'),
+    //         false,
+    //     ),
+    // );
 
     /**
      * creates plugin content
@@ -118,6 +118,7 @@ class TabMenu extends Plugin
     {
         global $CMS_CONF;
         global $syntax;
+        global $CatPage;
 
         $this->_cms_lang = new Language(
             $this->PLUGIN_SELF_DIR
@@ -127,32 +128,87 @@ class TabMenu extends Plugin
         );
 
         // get language labels
-        $label = $this->_cms_lang->getLanguageValue('label');
+        // $label = $this->_cms_lang->getLanguageValue('label');
 
         // get params
-        list($param_, $param_, $param_)
-            = $this->makeUserParaArray($value, false, '|');
+        // list($param_, $param_, $param_)
+            // = $this->makeUserParaArray($value, false, '|');
 
         // get conf and set default
-        $conf = array();
-        foreach ($this->_confdefault as $elem => $default) {
-            $conf[$elem] = ($this->settings->get($elem) == '')
-                ? $default[0]
-                : $this->settings->get($elem);
+        // $conf = array();
+        // foreach ($this->_confdefault as $elem => $default) {
+        //     $conf[$elem] = ($this->settings->get($elem) == '')
+        //         ? $default[0]
+        //         : $this->settings->get($elem);
+        // }
+
+        // get pages of current cat
+        $pagearray = $CatPage->get_PageArray(
+            CAT_REQUEST,
+            array(".hid.php", ".txt.php")
+        );
+        // real cat name without '/'
+        $cat = substr(CAT_REQUEST,strpos(CAT_REQUEST, '%2F')+3);
+
+        // remove page = category
+        for ($i=0; $i < count($pagearray); $i++) {
+            if ($cat == $pagearray[$i]) {
+                unset($pagearray[$i]);
+            }
         }
+        $pagearray = array_values($pagearray);
+
+        $catarray = $CatPage->get_CatArray(true, false, false);
+
+        $currentcatarray = array_intersect($pagearray, $catarray);
 
         // include jquery and TabMenu javascript
         $syntax->insert_jquery_in_head('jquery');
         $syntax->insert_in_head(
-            '<script type="text/javascript" src="'
-            . $this->PLUGIN_SELF_URL
-            . 'js/TabMenu.js"></script>'
+            '<script
+                type="text/javascript"
+                src="//code.jquery.com/ui/1.10.4/jquery-ui.js"
+            ></script>'
+        );
+        $syntax->insert_in_head(
+            '<script>
+                $(function() {
+                    $( "#tabs" ).tabs().addClass(
+                      "ui-tabs-vertical ui-helper-clearfix"
+                    );
+                    $( "#tabs li" ).removeClass( "ui-corner-top" ).addClass(
+                        "ui-corner-left"
+                    );
+                });
+            </script>'
         );
 
         // initialize return content, begin plugin content
         $content = '<!-- BEGIN ' . self::PLUGIN_TITLE . ' plugin content --> ';
 
-        // do something awesome here! ...
+        // build content
+        $content .= '<div id="tabs"><ul>';
+
+        // build tabs
+        foreach ($currentcatarray as $key => $cat) {
+            $content .= '<li><a href="#tabs-' . $key . '">' . urldecode($cat) . '</a></li>';
+        }
+        $content .= '</ul>';
+
+        // build tab content for each subcategory
+        foreach ($currentcatarray as $key => $cat) {
+            $content .= '<div id="tabs-' . $key . '">';
+            $currentpagearray = $CatPage->get_PageArray(
+                $cat,
+                array(".hid.php", ".txt.php")
+            );
+            // build link to each page of current subcategory
+            foreach ($currentpagearray as $currentpage) {
+                $content .= '<li>' . urldecode($currentpage) . '</li>';
+            }
+            $content .= '</div>';
+        }
+        $content .= '</div>';
 
         // end plugin content
         $content .= '<!-- END ' . self::PLUGIN_TITLE . ' plugin content --> ';
