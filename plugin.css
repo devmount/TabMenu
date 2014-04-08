@@ -1,0 +1,25 @@
+/*
+    PluginDraft CSS styles
+*/
+
+.tabmenu {
+}
+
+.tabmenu-error {
+    display: table;
+    margin: 2px 0;
+    border: 1px solid #f33;
+    background-color: #fee;
+}
+.tabmenu-error div {
+    display: table-cell;
+    padding: 2px 6px;
+    color: white;
+    background-color: #f33;
+    height: inherit;
+}
+.tabmenu-error span {
+    display: table-cell;
+    padding: 2px 4px;
+    color: #f33;
+}
