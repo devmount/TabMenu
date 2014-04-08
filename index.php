@@ -148,7 +148,7 @@ class TabMenu extends Plugin
             array(".hid.php", ".txt.php")
         );
         // real cat name without '/'
-        $cat = substr(CAT_REQUEST,strpos(CAT_REQUEST, '%2F')+3);
+        $cat = substr(CAT_REQUEST, strpos(CAT_REQUEST, '%2F')+3);
 
         // remove page = category
         for ($i=0; $i < count($pagearray); $i++) {
@@ -191,7 +191,10 @@ class TabMenu extends Plugin
 
         // build tabs
         foreach ($currentcatarray as $key => $cat) {
-            $content .= '<li><a href="#tabs-' . $key . '">' . urldecode($cat) . '</a></li>';
+            $catname = substr($cat, strripos($cat, '%2F')+3);
+            $content .= '<li><a href="#tabs-' . $key . '">'
+                . urldecode($catname)
+                . '</a></li>';
         }
         $content .= '</ul>';
 
@@ -204,7 +207,12 @@ class TabMenu extends Plugin
             );
             // build link to each page of current subcategory
             foreach ($currentpagearray as $currentpage) {
-                $content .= '<li>' . urldecode($currentpage) . '</li>';
+                // $content .= '<li>' . urldecode($currentpage) . '</li>';
+                $content .= $CatPage->create_AutoLinkTag(
+                    $cat,
+                    $currentpage,
+                    'tabmenu-pagelink'
+                );
             }
             $content .= '</div>';
         }
