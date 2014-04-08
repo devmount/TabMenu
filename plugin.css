@@ -5,25 +5,34 @@
 .tabmenu-tab {
 }
 .tabmenu-tab #tabs ul {
-    margin: 0;
-    padding: 0;
-    float: right;
+    margin: 0 -5px 0 0;
+    padding: 5px 0;
+    float: left;
     list-style-type: none;
+    border-right: 5px solid #234567;
+    width: 26.6666%;
 }
-.tabmenu-tab #tabs ul li {
-    padding: 2px 10px;
-    background-color: #abcdef;
+.tabmenu-tab #tabs ul li a {
+    display: block;
     margin-bottom: 3px;
+    padding: 4px 10px;
+    background-color: #abcdef;
+    font-size: 13pt;
 }
-.tabmenu-tab #tabs ul li.ui-tabs-active.ui-state-active,
-.tabmenu-tab #tabs ul li.ui-tabs-active.ui-state-focus {
+.tabmenu-tab #tabs ul li a:hover {
+    color: #000;
+}
+.tabmenu-tab #tabs ul li.ui-tabs-active.ui-state-active a,
+.tabmenu-tab #tabs ul li.ui-tabs-active.ui-state-focus a {
     background-color: #234567;
+    color: #fff;
 }
 
 .tabmenu-tab #tabs div {
     display: none;
-    float: right;
-    border-right: 5px solid #234567;
+    float: left;
+    border-left: 5px solid #234567;
+    width: 73.3333%;
 }
 
 
