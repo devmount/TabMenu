@@ -4,6 +4,28 @@
 
 .tabmenu-tab {
 }
+.tabmenu-tab #tabs ul {
+    margin: 0;
+    padding: 0;
+    float: right;
+    list-style-type: none;
+}
+.tabmenu-tab #tabs ul li {
+    padding: 2px 10px;
+    background-color: #abcdef;
+    margin-bottom: 3px;
+}
+.tabmenu-tab #tabs ul li.ui-tabs-active.ui-state-active,
+.tabmenu-tab #tabs ul li.ui-tabs-active.ui-state-focus {
+    background-color: #234567;
+}
+
+.tabmenu-tab #tabs div {
+    display: none;
+    float: right;
+    border-right: 5px solid #234567;
+}
+
 
 .tabmenu-pagelink {
     display: block;

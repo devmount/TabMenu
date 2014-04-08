@@ -173,12 +173,7 @@ class TabMenu extends Plugin
         $syntax->insert_in_head(
             '<script>
                 $(function() {
-                    $( "#tabs" ).tabs().addClass(
-                      "ui-tabs-vertical ui-helper-clearfix"
-                    );
-                    $( "#tabs li" ).removeClass( "ui-corner-top" ).addClass(
-                        "ui-corner-left"
-                    );
+                    $( "#tabs" ).tabs();
                 });
             </script>'
         );
@@ -187,6 +182,7 @@ class TabMenu extends Plugin
         $content = '<!-- BEGIN ' . self::PLUGIN_TITLE . ' plugin content --> ';
 
         // build content
+        $content .= '<div class="tabmenu-tab">';
         $content .= '<div id="tabs"><ul>';
 
         // build tabs
@@ -216,6 +212,7 @@ class TabMenu extends Plugin
             }
             $content .= '</div>';
         }
+        $content .= '</div>';
         $content .= '</div>';
 
         // end plugin content
