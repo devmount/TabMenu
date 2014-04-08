@@ -2,7 +2,15 @@
     PluginDraft CSS styles
 */
 
-.tabmenu {
+.tabmenu-tab {
+}
+
+.tabmenu-pagelink {
+    display: block;
+    padding: 2px 10px;
+}
+.tabmenu-pagelink:nth-child(even) {
+    background-color: #eee;
 }
 
 .tabmenu-error {
