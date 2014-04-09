@@ -220,6 +220,13 @@ class TabMenu extends Plugin
                     );
                 }
             }
+            $content .=
+                '<a
+                    class="tabmenu-catlink"
+                    href="' . $CatPage->get_Href($cat, false) . '"
+                >'
+                    . $catname
+                . '</a>';
             $content .= '</div>';
         }
         $content .= '</div>';

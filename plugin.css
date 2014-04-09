@@ -47,6 +47,13 @@
     background-color: #eee;
 }
 
+.tabmenu-catlink {
+    display: block;
+    padding: 2px 10px;
+    background-color: #234567;
+    color: #fff;
+}
+
 .tabmenu-error {
     display: table;
     margin: 2px 0;
