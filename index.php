@@ -45,7 +45,7 @@ class TabMenu extends Plugin
     // plugin information
     const PLUGIN_AUTHOR  = 'HPdesigner';
     const PLUGIN_DOCU
-        = 'http://devmount.de/Develop/Mozilo%20Plugins/TabMenu.html';
+        = 'http://devmount.de/Develop/moziloCMS/Plugins/TabMenu.html';
     const PLUGIN_TITLE   = 'TabMenu';
     const PLUGIN_VERSION = 'v0.1.jjjj-mm-dd';
     const MOZILO_VERSION = '2.0';
@@ -145,7 +145,7 @@ class TabMenu extends Plugin
         // get pages of current cat
         $pagearray = $CatPage->get_PageArray(
             CAT_REQUEST,
-            array(".hid.php", ".txt.php")
+            array(EXT_PAGE, EXT_HIDDEN)
         );
         // real cat name without '/'
         $cat = substr(CAT_REQUEST, strpos(CAT_REQUEST, '%2F')+3);
@@ -200,12 +200,16 @@ class TabMenu extends Plugin
             $content .= '<div id="tabs-' . $key . '">';
             $currentpagearray = $CatPage->get_PageArray(
                 $cat,
-                array(".hid.php", ".txt.php")
+                array(EXT_PAGE)
             );
             $currentpagearray = array_diff($currentpagearray, array($catname));
 
             if (count($currentpagearray) == 0) {
-                $content .= 'Es sind für ' . $catname . ' momentant noch keine Einträge verfügbar.';
+                $content .=
+                    '<span>
+                        Es sind für ' . $catname . ' momentant noch keine Einträge
+                        verfügbar.
+                    </span>';
             } else {
                 // build link to each page of current subcategory
                 foreach ($currentpagearray as $currentpage) {
