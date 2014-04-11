@@ -3,18 +3,20 @@
 /**
  * moziloCMS Plugin: TabMenu
  *
- * Does something awesome!
+ * The TabMenu Plugin creates a tab navigation from subcategories and their pages of
+ * the current category. Switch between tabs doesn't require page reload.
  *
  * PHP version 5
  *
  * @category PHP
  * @package  PHP_MoziloPlugins
  * @author   HPdesigner <mail@devmount.de>
- * @license  GPL v3
- * @version  GIT: v0.1.jjjj-mm-dd
+ * @license  GPL v3+
+ * @version  GIT: v0.0.2014-04-11
  * @link     https://github.com/devmount/TabMenu
- * @link     http://devmount.de/Develop/Mozilo%20Plugins/TabMenu.html
- * @see      Verse
+ * @link     http://devmount.de/Develop/moziloCMS/Plugins/TabMenu.html
+ * @see      But the fruit of the Spirit is love, joy, peace, patience, kindness,
+ *           goodness, faithfulness...
  *           – The Bible
  *
  * Plugin created by DEVMOUNT
@@ -33,7 +35,7 @@ if (!defined('IS_CMS')) {
  * @category PHP
  * @package  PHP_MoziloPlugins
  * @author   HPdesigner <mail@devmount.de>
- * @license  GPL v3
+ * @license  GPL v3+
  * @link     https://github.com/devmount/TabMenu
  */
 class TabMenu extends Plugin
@@ -47,7 +49,7 @@ class TabMenu extends Plugin
     const PLUGIN_DOCU
         = 'http://devmount.de/Develop/moziloCMS/Plugins/TabMenu.html';
     const PLUGIN_TITLE   = 'TabMenu';
-    const PLUGIN_VERSION = 'v0.1.jjjj-mm-dd';
+    const PLUGIN_VERSION = 'v0.0.2014-04-11';
     const MOZILO_VERSION = '2.0';
     private $_plugin_tags = array(
         'tag1' => '{TabMenu}',
