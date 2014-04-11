@@ -24,4 +24,4 @@ This Plugin is distributed under *GNU General Public License, Version 3* (see LI
 
 ## Documentation
 A detailed documentation and demo can be found on DEVMOUNT's website:
-http://devmount.de/Develop/moziloCMS/TabMenu.html
+http://devmount.de/Develop/moziloCMS/Plugins/TabMenu.html
