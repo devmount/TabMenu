@@ -1,2 +1,4 @@
-notice                  = Notice
-notice_no_subcategories = No subcategories exist in current category "{PARAM1}"
+notice                      = Notice
+notice_no_subcategories     = No subcategories exist in current category "{PARAM1}"
+notice_no_subcategory_pages = There are currently no pages available in "{PARAM1}"
+goto_overview               = Go to overview

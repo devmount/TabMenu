@@ -199,7 +199,8 @@ class TabMenu extends Plugin
         // build tabs
         foreach ($currentcatarray as $key => $cat) {
             $catname = substr($cat, strripos($cat, '%2F')+3);
-            $content .= '<li><a href="#tabs-' . $key . '">'
+            $content .=
+                '<li><a href="#tabs-' . $key . '">'
                 . urldecode($catname)
                 . '</a></li>';
         }
@@ -218,9 +219,12 @@ class TabMenu extends Plugin
             // handle no pages in category
             if (count($currentpagearray) == 0) {
                 $content .=
-                    '<span>
-                        Für ' . $catname . ' sind momentant keine Einträge verfügbar.
-                    </span>';
+                    '<span>'
+                    . $this->_cms_lang->getLanguageValue(
+                        'notice_no_subcategory_pages',
+                        urldecode($catname)
+                    )
+                    . '</span>';
             } else {
                 // build link to each page of current subcategory
                 foreach ($currentpagearray as $currentpage) {
@@ -235,7 +239,9 @@ class TabMenu extends Plugin
                 '<a
                     class="tabmenu-catlink"
                     href="' . $CatPage->get_Href($cat, false) . '"
-                >Zur Übersicht</a>';
+                >'
+                . $this->_cms_lang->getLanguageValue('goto_overview')
+                . '</a>';
             $content .= '</div>';
         }
         $content .= '<br style="clear:both;" />
@@ -614,8 +620,8 @@ class TabMenu extends Plugin
     /**
      * throws styled message
      *
-     * @param string $type Type of message ('ERROR', 'SUCCESS')
      * @param string $text Content of message
+     * @param string $type Type of message ('ERROR', 'SUCCESS')
      *
      * @return string HTML content
      */

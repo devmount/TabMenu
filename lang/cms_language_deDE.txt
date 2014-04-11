@@ -1,2 +1,4 @@
-notice                  = Hinweis
-notice_no_subcategories = In der aktuellen Kategorie "{PARAM1}" existieren keine Unterkategorien.
+notice                      = Hinweis
+notice_no_subcategories     = In der aktuellen Kategorie "{PARAM1}" existieren keine Unterkategorien.
+notice_no_subcategory_pages = Für "{PARAM1}" sind momentant keine Einträge verfügbar.
+goto_overview               = Zur Übersicht
