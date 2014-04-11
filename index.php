@@ -142,7 +142,7 @@ class TabMenu extends Plugin
         //         : $this->settings->get($elem);
         // }
 
-        // get pages of current cat
+        // get pages AND subcategories of current cat
         $pagearray = $CatPage->get_PageArray(
             CAT_REQUEST,
             array(EXT_PAGE, EXT_HIDDEN)
@@ -150,7 +150,7 @@ class TabMenu extends Plugin
         // real cat name without '/'
         $cat = substr(CAT_REQUEST, strpos(CAT_REQUEST, '%2F')+3);
 
-        // remove page = category
+        // remove page name = current category name
         for ($i=0; $i < count($pagearray); $i++) {
             if ($cat == $pagearray[$i]) {
                 unset($pagearray[$i]);
@@ -158,8 +158,10 @@ class TabMenu extends Plugin
         }
         $pagearray = array_values($pagearray);
 
+        // get all categories
         $catarray = $CatPage->get_CatArray(true, false, false);
 
+        // get all subcategories
         $currentcatarray = array_intersect($pagearray, $catarray);
 
         // handle no subcategories
@@ -200,9 +202,9 @@ class TabMenu extends Plugin
         foreach ($currentcatarray as $key => $cat) {
             $catname = substr($cat, strripos($cat, '%2F')+3);
             $content .=
-                '<li><a href="#tabs-' . $key . '">'
-                . urldecode($catname)
-                . '</a></li>';
+                '<li>
+                    <a href="#tabs-' . $key . '">' . urldecode($catname) . '</a>
+                </li>';
         }
         $content .= '</ul>';
 
@@ -210,10 +212,12 @@ class TabMenu extends Plugin
         foreach ($currentcatarray as $key => $cat) {
             $catname = substr($cat, strripos($cat, '%2F')+3);
             $content .= '<div id="tabs-' . $key . '">';
+            // get pages from current subcategory
             $currentpagearray = $CatPage->get_PageArray(
                 $cat,
                 array(EXT_PAGE)
             );
+            // remove page name = current subcategory name
             $currentpagearray = array_diff($currentpagearray, array($catname));
 
             // handle no pages in category
@@ -235,6 +239,7 @@ class TabMenu extends Plugin
                     );
                 }
             }
+            // add link to go directly to subcategory
             $content .=
                 '<a
                     class="tabmenu-catlink"
