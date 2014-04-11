@@ -162,6 +162,17 @@ class TabMenu extends Plugin
 
         $currentcatarray = array_intersect($pagearray, $catarray);
 
+        // handle no subcategories
+        if (count($currentcatarray) == 0) {
+            return $this->throwMessage(
+                $this->_cms_lang->getLanguageValue(
+                    'notice_no_subcategories',
+                    urldecode(CAT_REQUEST)
+                ),
+                'NOTICE'
+            );
+        }
+
         // include jquery and TabMenu javascript
         $syntax->insert_jquery_in_head('jquery');
         $syntax->insert_in_head(
@@ -204,11 +215,11 @@ class TabMenu extends Plugin
             );
             $currentpagearray = array_diff($currentpagearray, array($catname));
 
+            // handle no pages in category
             if (count($currentpagearray) == 0) {
                 $content .=
                     '<span>
-                        Es sind für ' . $catname . ' momentant noch keine Einträge
-                        verfügbar.
+                        Für ' . $catname . ' sind momentant keine Einträge verfügbar.
                     </span>';
             } else {
                 // build link to each page of current subcategory
@@ -227,8 +238,9 @@ class TabMenu extends Plugin
                 >Zur Übersicht</a>';
             $content .= '</div>';
         }
-        $content .= '</div>';
-        $content .= '</div><br style="clear:both;" />';
+        $content .= '<br style="clear:both;" />
+                </div>
+            </div>';
 
         // end plugin content
         $content .= '<!-- END ' . self::PLUGIN_TITLE . ' plugin content --> ';
@@ -325,53 +337,53 @@ class TabMenu extends Plugin
         // }
 
         // read admin.css
-        $admin_css = '';
-        $lines = file('../plugins/' . self::PLUGIN_TITLE. '/admin.css');
-        foreach ($lines as $line_num => $line) {
-            $admin_css .= trim($line);
-        }
+        // $admin_css = '';
+        // $lines = file('../plugins/' . self::PLUGIN_TITLE. '/admin.css');
+        // foreach ($lines as $line_num => $line) {
+        //     $admin_css .= trim($line);
+        // }
 
-        // add template CSS
-        $template = '<style>' . $admin_css . '</style>';
+        // // add template CSS
+        // $template = '<style>' . $admin_css . '</style>';
 
-        // build Template
-        $template .= '
-            <div class="tabmenu-admin-header">
-            <span>'
-                . $this->_admin_lang->getLanguageValue(
-                    'admin_header',
-                    self::PLUGIN_TITLE
-                )
-            . '</span>
-            <a href="' . self::PLUGIN_DOCU . '" target="_blank">
-            <img style="float:right;" src="' . self::LOGO_URL . '" />
-            </a>
-            </div>
-        </li>
-        <li class="mo-in-ul-li ui-widget-content tabmenu-admin-li">
-            <div class="tabmenu-admin-subheader">'
-            . $this->_admin_lang->getLanguageValue('admin_test')
-            . '</div>
-            <div style="margin-bottom:5px;">
-                <div class="tabmenu-single-conf">
-                    {test1_text}
-                </div>
-                {test1_description}
-                <span class="tabmenu-admin-default">
-                    [' . /*$this->_confdefault['test1'][0] .*/']
-                </span>
-            </div>
-            <div style="margin-bottom:5px;">
-                <div class="tabmenu-single-conf">
-                    {test2_text}
-                </div>
-                {test2_description}
-                <span class="tabmenu-admin-default">
-                    [' . /*$this->_confdefault['test2'][0] .*/']
-                </span>
-        ';
+        // // build Template
+        // $template .= '
+        //     <div class="tabmenu-admin-header">
+        //     <span>'
+        //         . $this->_admin_lang->getLanguageValue(
+        //             'admin_header',
+        //             self::PLUGIN_TITLE
+        //         )
+        //     . '</span>
+        //     <a href="' . self::PLUGIN_DOCU . '" target="_blank">
+        //     <img style="float:right;" src="' . self::LOGO_URL . '" />
+        //     </a>
+        //     </div>
+        // </li>
+        // <li class="mo-in-ul-li ui-widget-content tabmenu-admin-li">
+        //     <div class="tabmenu-admin-subheader">'
+        //     . $this->_admin_lang->getLanguageValue('admin_test')
+        //     . '</div>
+        //     <div style="margin-bottom:5px;">
+        //         <div class="tabmenu-single-conf">
+        //             {test1_text}
+        //         </div>
+        //         {test1_description}
+        //         <span class="tabmenu-admin-default">
+        //             [' . /*$this->_confdefault['test1'][0] .*/']
+        //         </span>
+        //     </div>
+        //     <div style="margin-bottom:5px;">
+        //         <div class="tabmenu-single-conf">
+        //             {test2_text}
+        //         </div>
+        //         {test2_description}
+        //         <span class="tabmenu-admin-default">
+        //             [' . /*$this->_confdefault['test2'][0] .*/']
+        //         </span>
+        // ';
 
-        $config['--template~~'] = $template;
+        // $config['--template~~'] = $template;
 
         return $config;
     }
@@ -610,10 +622,10 @@ class TabMenu extends Plugin
     protected function throwMessage($text, $type)
     {
         return '<div class="'
-                . self::PLUGIN_TITLE . ucfirst(strtolower($type))
+                . strtolower(self::PLUGIN_TITLE . '-' . $type)
             . '">'
             . '<div>'
-                . $this->cms_lang->getLanguageValue(strtolower($type))
+                . $this->_cms_lang->getLanguageValue(strtolower($type))
             . '</div>'
             . '<span>' . $text. '</span>'
             . '</div>';
