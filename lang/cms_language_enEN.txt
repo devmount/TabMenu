@@ -1,2 +1,2 @@
-error     = Error
-error_sth = ...
+notice                  = Notice
+notice_no_subcategories = No subcategories exist in current category "{PARAM1}"
