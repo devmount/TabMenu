@@ -13,7 +13,7 @@
  * @author   DEVMOUNT <mail@devmount.de>
  * @license  GPL v3+
  * @version  GIT: v0.0.2014-04-11
- * @link     https://github.com/devmount/TabMenu
+ * @link     https://github.com/devmount-mozilo/TabMenu
  * @link     http://devmount.de/Develop/moziloCMS/Plugins/TabMenu.html
  * @see      But the fruit of the Spirit is love, joy, peace, patience, kindness,
  *           goodness, faithfulness...
@@ -36,7 +36,7 @@ if (!defined('IS_CMS')) {
  * @package  PHP_MoziloPlugins
  * @author   DEVMOUNT <mail@devmount.de>
  * @license  GPL v3+
- * @link     https://github.com/devmount/TabMenu
+ * @link     https://github.com/devmount-mozilo/TabMenu
  */
 class TabMenu extends Plugin
 {
