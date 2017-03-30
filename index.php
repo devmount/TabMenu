@@ -13,8 +13,7 @@
  * @author   DEVMOUNT <mail@devmount.de>
  * @license  GPL v3+
  * @version  GIT: v0.0.2014-04-11
- * @link     https://github.com/devmount-mozilo/TabMenu
- * @link     http://devmount.de/Develop/moziloCMS/Plugins/TabMenu.html
+ * @link     https://github.com/devmount-mozilo/TabMenu/wiki/Dokumentation
  * @see      But the fruit of the Spirit is love, joy, peace, patience, kindness,
  *           goodness, faithfulness...
  *           – The Bible
@@ -50,7 +49,7 @@ class TabMenu extends Plugin
     const PLUGIN_VERSION = 'v0.0.2014-04-11';
     const MOZILO_VERSION = '2.0';
     const PLUGIN_DOCU
-        = 'http://devmount.de/Develop/moziloCMS/Plugins/TabMenu.html';
+        = 'https://github.com/devmount-mozilo/TabMenu/wiki/Dokumentation';
 
     private $_plugin_tags = array(
         'tag1' => '{TabMenu}',
